@@ -19,8 +19,13 @@ public class Main {
             System.out.println(" 5 - Delete a contact");
             System.out.println(" 0 - Quit the application");
             System.out.print("> ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String choiceString = scanner.nextLine();
+            int choice;
+            try {
+                choice = Integer.parseInt(choiceString);
+            } catch (Exception e) {
+                choice = -1;
+            }
             switch (choice) {
                 case 1: {
                     mobilePhone.printContacts();
@@ -56,7 +61,7 @@ public class Main {
                         String newName = scanner.nextLine();
                         System.out.print("Enter the new phone number (or leave empty): ");
                         String newPhoneNumber = scanner.nextLine();
-                        mobilePhone.editContact(contact.getName(), newName, newPhoneNumber);
+                        mobilePhone.modifyContact(contact, newName, newPhoneNumber);
                         System.out.println("Contact modified");
                     } else {
                         System.out.println("Contact not found");
@@ -68,15 +73,21 @@ public class Main {
                     String nameToRemove = scanner.nextLine();
                     Contact contact = mobilePhone.findContact(nameToRemove);
                     if (contact != null) {
-                        mobilePhone.removeContact(contact.getName());
+                        mobilePhone.removeContact(contact);
                         System.out.println("Contact removed");
                     } else {
                         System.out.println("Contact not found");
                     }
                     break;
                 }
-                case 0:
+                case 0: {
+                    System.out.println("Bye!");
                     break menu_loop;
+                }
+                default: {
+                    System.err.println("Menu item doesn't exist");
+                    break;
+                }
             }
         }
     }

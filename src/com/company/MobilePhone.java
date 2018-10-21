@@ -27,23 +27,33 @@ public class MobilePhone {
         return contact;
     }
 
+    public Contact removeContact(Contact contact) {
+        contactList.remove(contact);
+        return (contact);
+    }
+
     public Contact removeContact(String name) {
         Contact contact = findContact(name);
         if (contact != null) {
-            contactList.remove(contact);
+            removeContact(contact);
         }
         return (contact);
     }
 
-    public Contact editContact(String name, String newName, String newPhoneNumber) {
+    public Contact modifyContact(Contact contact, String newName, String newPhoneNumber) {
+        if (newName.length() > 0) {
+            contact.setName(newName);
+        }
+        if (newPhoneNumber.length() > 0) {
+            contact.setPhoneNumber(newPhoneNumber);
+        }
+        return (contact);
+    }
+
+    public Contact modifyContact(String name, String newName, String newPhoneNumber) {
         Contact contact = findContact(name);
         if (contact != null) {
-            if (newName.length() > 0) {
-                contact.setName(newName);
-            }
-            if (newPhoneNumber.length() > 0) {
-                contact.setPhoneNumber(newPhoneNumber);
-            }
+            modifyContact(contact, newName, newPhoneNumber);
         }
         return contact;
     }
